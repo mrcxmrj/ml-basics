@@ -4,7 +4,7 @@ import random
 import shutil
 
 
-def move_first_n_files(src_dir, dst_dir, n, mode):
+def move_mode_n_files(src_dir, dst_dir, n, mode):
     if not os.path.exists(src_dir):
         print(f"Source directory '{src_dir}' does not exist.")
         return
@@ -56,7 +56,7 @@ def main():
 
     args = parser.parse_args()
 
-    move_first_n_files(args.src_dir, args.dst_dir, args.num_files, args.mode)
+    move_mode_n_files(args.src_dir, args.dst_dir, args.num_files, args.mode)
 
 
 if __name__ == "__main__":
