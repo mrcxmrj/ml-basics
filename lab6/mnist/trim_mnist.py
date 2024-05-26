@@ -41,7 +41,7 @@ def copy_csv_rows(src_csv, dst_csv, n, mode):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Move first n files from one directory to another."
+        description="Copy first n files from one directory to another."
     )
     parser.add_argument("src", type=str, help="Source file path")
     parser.add_argument("dst", type=str, help="Destination file path")
@@ -52,7 +52,7 @@ def main():
         type=str,
         choices=["first", "last", "random"],
         default="first",
-        help="Mode of selecting files to move (first, last, random)",
+        help="Mode of selecting files to copy (first, last, random)",
     )
 
     args = parser.parse_args()
