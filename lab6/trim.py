@@ -1,9 +1,10 @@
 import argparse
 import os
+import random
 import shutil
 
 
-def move_first_n_files(src_dir, dst_dir, n):
+def move_first_n_files(src_dir, dst_dir, n, mode):
     if not os.path.exists(src_dir):
         print(f"Source directory '{src_dir}' does not exist.")
         return
@@ -14,7 +15,15 @@ def move_first_n_files(src_dir, dst_dir, n):
     files = os.listdir(src_dir)
     files = [f for f in files if os.path.isfile(os.path.join(src_dir, f))]
 
-    files_to_move = files[:n]
+    if mode == "first":
+        files_to_move = files[:n]
+    elif mode == "last":
+        files_to_move = files[-n:]
+    elif mode == "random":
+        files_to_move = random.sample(files, min(n, len(files)))
+    else:
+        print(f"Invalid mode '{mode}'. Use 'first', 'last', or 'random'.")
+        return
 
     if not files_to_move:
         print("No files to move.")
@@ -36,10 +45,18 @@ def main():
     parser.add_argument("src_dir", type=str, help="Source directory path")
     parser.add_argument("dst_dir", type=str, help="Destination directory path")
     parser.add_argument("num_files", type=int, help="Number of files to move")
+    parser.add_argument(
+        "-m",
+        "--mode",
+        type=str,
+        choices=["first", "last", "random"],
+        default="first",
+        help="Mode of selecting files to move (first, last, random)",
+    )
 
     args = parser.parse_args()
 
-    move_first_n_files(args.src_dir, args.dst_dir, args.num_files)
+    move_first_n_files(args.src_dir, args.dst_dir, args.num_files, args.mode)
 
 
 if __name__ == "__main__":
